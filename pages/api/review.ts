@@ -3,7 +3,8 @@ import { CodeReviewResponse } from '@/types';
 import { Groq } from "groq-sdk";
 
 //const API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+ GROQ_API_KEY = "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";
+const groq = new Groq({ apiKey: GROQ_API_KEY });
 const MODEL = "llama-3.3-70b-versatile";
 //const MODEL = 'gpt-3.5-turbo';
 
