@@ -4,7 +4,7 @@ export interface CodeReviewRequest {
 }
 
 export interface CodeReviewResponse {
-  review: string | null;
+  review: string | "";
   suggestions: string[] | null;
   score: number | null ;
   issues: ReviewIssue[] | null;
