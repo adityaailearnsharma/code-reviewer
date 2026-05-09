@@ -69,48 +69,21 @@ Provide your response in the following JSON format:
       model: "llama-3.3-70b-versatile",
     });
 
-    if (!response.ok) {
-      const error = await response.json();
-      console.error('Groq API error:', error);
-      return res.status(response.status).json({
-        error: error.error?.message || 'Failed to get code review from Groq API',
-      });
-    }
+    
+  //  const data = await response.json();
+    //const content = data.choices[0]?.message?.content;
 
-    const data = await response.json();
-    const content = data.choices[0]?.message?.content;
+   // if (!content) {
+     // return res.status(500).json({ error: 'No response from Groq' });
+    //}
 
-    if (!content) {
-      return res.status(500).json({ error: 'No response from Groq' });
-    }
-
-    try {
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error('No JSON found in response');
-      }
-
-      const review = JSON.parse(jsonMatch[0]);
-
-      return res.status(200).json({
-        review: review.review || 'No review available',
-        suggestions: review.suggestions || [],
-        score: review.score || 5,
-        issues: review.issues || [],
-      });
-    } catch (parseError) {
-      console.error('Error parsing AI response:', parseError);
-      return res.status(200).json({
-        review: content,
-        suggestions: [],
-        score: 5,
-        issues: [],
-      });
-    }
+    return res.status(200).json({ feedback: completion.choices[0].message.content });
+    
   } catch (error) {
     console.error('Error:', error);
-    return res.status(500).json({
-      error: error instanceof Error ? error.message : 'Internal server error',
-    });
+    return res.status(500).json({ error: error.message });
+   // return res.status(500).json({
+     // error: error instanceof Error ? error.message : 'Internal server error',
+   // });
   }
 }
