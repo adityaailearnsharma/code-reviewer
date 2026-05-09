@@ -8,8 +8,8 @@ const groq = new Groq({ apiKey: GROQ_API_KEY });
 //const MODEL = "llama-3.3-70b-versatile";
 //const MODEL = 'gpt-3.5-turbo';
 
-if (!API_KEY) {
-  console.error('Warning: NEXT_PUBLIC_OPENAI_API_KEY is not set');
+if (!GROQ_API_KEY) {
+  console.error('Warning: GROQ_API_KEY is not set');
 }
 
 export default async function handler(
@@ -28,9 +28,9 @@ export default async function handler(
       .json({ error: 'Code and language are required' });
   }
 
-  if (!API_KEY) {
+  if (!GROQ_API_KEY) {
     return res.status(500).json({
-      error: 'OpenAI API key not configured. Please set NEXT_PUBLIC_OPENAI_API_KEY in .env.local',
+      error: 'Groq API key not configured. Please set GROQ_API_KEY in .env.local',
     });
   }
 
@@ -70,9 +70,9 @@ Provide your response in the following JSON format:
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('OpenAI API error:', error);
+      console.error('Groq API error:', error);
       return res.status(response.status).json({
-        error: error.error?.message || 'Failed to get code review from OpenAI',
+        error: error.error?.message || 'Failed to get code review from Groq API',
       });
     }
 
@@ -80,7 +80,7 @@ Provide your response in the following JSON format:
     const content = data.choices[0]?.message?.content;
 
     if (!content) {
-      return res.status(500).json({ error: 'No response from OpenAI' });
+      return res.status(500).json({ error: 'No response from Groq' });
     }
 
     try {
