@@ -1,8 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { CodeReviewResponse } from '@/types';
+import { Groq } from "groq-sdk";
 
-const API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-const MODEL = 'gpt-3.5-turbo';
+//const API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const MODEL = "llama-3.3-70b-versatile";
+//const MODEL = 'gpt-3.5-turbo';
 
 if (!API_KEY) {
   console.error('Warning: NEXT_PUBLIC_OPENAI_API_KEY is not set');
@@ -52,27 +55,16 @@ Provide your response in the following JSON format:
   ]
 }`;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          {
-            role: 'system',
-            content: 'You are an expert code reviewer who provides constructive feedback. Always respond with valid JSON.',
-          },
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-        temperature: 0.7,
-        max_tokens: 1000,
-      }),
+
+    const response = await groq.chat.completions.create({
+      messages: [
+        { 
+          role: "system", 
+          content: "You are an expert Frontend Code Reviewer. Analyze code for bugs, accessibility (WCAG), and performance. Use Markdown for formatting." 
+        },
+        { role: "user", content: code }
+      ],
+      model: "llama-3.3-70b-versatile",
     });
 
     if (!response.ok) {
