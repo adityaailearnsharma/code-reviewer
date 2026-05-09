@@ -61,7 +61,8 @@ Provide your response in the following JSON format:
       messages: [
         { 
           role: "system", 
-          content: "You are an expert Frontend Code Reviewer. Analyze code for bugs, accessibility (WCAG), and performance. Use Markdown for formatting." 
+          //content: "You are an expert Frontend Code Reviewer. Analyze code for bugs, accessibility (WCAG), and performance. Use Markdown for formatting." 
+          content: prompt,
         },
         { role: "user", content: code }
       ],
