@@ -57,7 +57,7 @@ Provide your response in the following JSON format:
 }`;
 
 
-    const response = await groq.chat.completions.create({
+    const completion = await groq.chat.completions.create({
       messages: [
         { 
           role: "system", 
