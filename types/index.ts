@@ -8,7 +8,7 @@ export interface CodeReviewResponse {
   suggestions: string[];
   score: number;
   issues: ReviewIssue[];
-  feedback: string; 
+  feedback:  string | null;
 }
 
 export interface ReviewIssue {
