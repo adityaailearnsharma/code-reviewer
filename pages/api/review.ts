@@ -84,7 +84,8 @@ Provide your response in the following JSON format:
     
   } catch (error) {
     console.error('Error:', error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({error: error instanceof Error ? error.message : 'Internal server error'});
+   // return res.status(500).json({ error: error.message });
    // return res.status(500).json({
      // error: error instanceof Error ? error.message : 'Internal server error',
    // });
