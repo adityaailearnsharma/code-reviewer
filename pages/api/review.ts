@@ -76,8 +76,11 @@ Provide your response in the following JSON format:
    // if (!content) {
      // return res.status(500).json({ error: 'No response from Groq' });
     //}
+    const content = completion?.choices?.[0]?.message?.content || "No response generated.";
+    
+    return res.json({ feedback: content });
 
-    return res.status(200).json({ feedback: completion.choices[0].message.content });
+   // return res.status(200).json({ feedback: completion.choices[0].message.content });
     
   } catch (error) {
     console.error('Error:', error);
