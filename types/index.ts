@@ -5,9 +5,9 @@ export interface CodeReviewRequest {
 
 export interface CodeReviewResponse {
   review: string | " ";
-  suggestions: string[] | null;
-  score: number | null ;
-  issues: ReviewIssue[] | null;
+  suggestions: string[];
+  score: number;
+  issues: ReviewIssue[];
   feedback:  string | " ";
 }
 
